@@ -59,7 +59,7 @@ function TutorMarketplacePage() {
         }
 
         if (selectedCourse) {
-          queryParams.append('classes_available_to_teach', selectedCourse);
+          queryParams.append('classes_available_to_teach', selectedCourse.course_code);
         }
 
         const apiUrl = `${baseUrl}?${queryParams.toString()}`;
