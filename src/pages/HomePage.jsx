@@ -104,10 +104,10 @@ function HomePage() {
     <div className="bg-white dark:bg-gray-900">
       {/* Hero Section */}
       <div className="relative bg-gradient-to-r from-brand-600 to-brand-800 overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <div className="relative z-10 pb-8 bg-brand-700 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-            <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-              <div className="sm:text-center lg:text-left">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative z-10 pt-10 pb-16 sm:pt-12 sm:pb-20 md:pt-16 md:pb-24 lg:pt-20 lg:pb-28 xl:pt-24 xl:pb-32">
+            <div className="lg:grid lg:grid-cols-2 lg:gap-8 items-center">
+              <div className="text-center lg:text-left">
                 <h1 className="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl">
                   <span className="block">Find the perfect tutor</span>
                   <span className="block text-brand-200">for your courses</span>
@@ -178,15 +178,16 @@ function HomePage() {
                   </div>
                 </div>
               </div>
-            </main>
+              
+              <div className="mt-12 lg:mt-0">
+                <img
+                  className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full rounded-lg shadow-xl"
+                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80"
+                  alt="Students studying together"
+                />
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-          <img
-            className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
-            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80"
-            alt="Students studying together"
-          />
         </div>
       </div>
 

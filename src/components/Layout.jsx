@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const navItems = [
@@ -10,6 +10,33 @@ const navItems = [
 
 const Layout = ({ children }) => {
   const location = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        // Check if the click is on the hamburger button
+        const hamburgerButton = document.querySelector('[aria-expanded]');
+        if (!hamburgerButton || !hamburgerButton.contains(event.target)) {
+          setIsMenuOpen(false);
+        }
+      }
+    }
+
+    // Close menu when route changes
+    const unlisten = () => {
+      setIsMenuOpen(false);
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    location.pathname && unlisten();
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [location]);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -59,8 +86,11 @@ const Layout = ({ children }) => {
               {/* Mobile menu button */}
               <button
                 type="button"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-500 dark:text-gray-300 dark:hover:bg-gray-700"
-                aria-expanded="false"
+                aria-expanded={isMenuOpen}
+                aria-controls="mobile-menu"
+                aria-label="Toggle menu"
               >
                 <span className="sr-only">Open main menu</span>
                 <svg
@@ -84,35 +114,49 @@ const Layout = ({ children }) => {
         </div>
 
         {/* Mobile menu */}
-        <div className="md:hidden hidden">
-          <div className="pt-2 pb-3 space-y-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`block px-3 py-2 rounded-md text-base font-medium ${
-                  location.pathname === item.path
-                    ? 'bg-brand-50 text-brand-700 dark:bg-gray-800 dark:text-brand-400'
-                    : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700'
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-            <div className="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
-              <div className="space-y-1 px-2">
+        <div 
+          id="mobile-menu" 
+          ref={menuRef}
+          className={`md:hidden bg-white dark:bg-gray-800 shadow-lg absolute top-16 left-0 right-0 z-50 transition-all duration-300 ease-in-out transform ${
+            isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'
+          }`}
+          style={{
+            maxHeight: isMenuOpen ? '1000px' : '0',
+            overflow: 'hidden',
+            transition: 'max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, transform 0.3s ease-in-out'
+          }}
+          aria-hidden={!isMenuOpen}
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            <div className="pb-3 space-y-1">
+              {navItems.map((item) => (
                 <Link
-                  to="/login"
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700"
+                  key={item.path}
+                  to={item.path}
+                  className={`block px-3 py-2 rounded-md text-base font-medium ${
+                    location.pathname === item.path
+                      ? 'bg-brand-50 text-brand-700 dark:bg-gray-700 dark:text-brand-400'
+                      : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700'
+                  }`}
                 >
-                  Sign In
+                  {item.name}
                 </Link>
-                <Link
-                  to="/register"
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700"
-                >
-                  Sign Up
-                </Link>
+              ))}
+              <div className="pt-2 pb-2 border-t border-gray-200 dark:border-gray-700 mt-2">
+                <div className="space-y-2 px-2">
+                  <Link
+                    to="/login"
+                    className="w-full flex justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="w-full flex justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-brand-700 bg-brand-100 hover:bg-brand-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 dark:bg-brand-900/30 dark:text-brand-300 dark:hover:bg-brand-900/50"
+                  >
+                    Sign Up
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
