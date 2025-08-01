@@ -246,7 +246,9 @@ function TutorMarketplacePage() {
                       />
                     </div>
                     <div className="ml-4">
-                      <h2 className="text-lg font-medium text-gray-900">{tutor.name}</h2>
+                      <Link to={`/tutor/${tutor.tutor_id}`} className="text-lg font-medium text-brand-primary hover:underline">
+  {tutor.name}
+</Link>
                       <div className="flex items-center mt-1">
                         <StarRating rating={tutor.average_rating} />
                         <span className="ml-2 text-sm text-gray-500">

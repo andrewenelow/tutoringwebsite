@@ -124,34 +124,24 @@ function HomePage() {
                         <label htmlFor="university" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                           Your University
                         </label>
-                        {isLoading.universities ? (
-                          <div className="w-full border border-gray-300 rounded-md p-2 bg-gray-100 text-gray-500">
-                            Loading universities...
-                          </div>
-                        ) : (
-                          <UniversitySelect
-                            universities={universities}
-                            selectedUniversity={selectedUniversity}
-                            onSelect={setSelectedUniversity}
-                          />
-                        )}
+                        <UniversitySelect
+                          universities={universities}
+                          selectedUniversity={selectedUniversity}
+                          setSelectedUniversity={setSelectedUniversity}
+                          isLoading={isLoading.universities}
+                        />
                       </div>
                       
                       <div>
                         <label htmlFor="course" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                           Course
                         </label>
-                        {isLoading.courses ? (
-                          <div className="w-full border border-gray-300 rounded-md p-2 bg-gray-100 text-gray-500">
-                            Loading courses...
-                          </div>
-                        ) : (
-                          <CourseSelect
-                            courses={allCourses}
-                            selectedCourse={selectedCourse}
-                            onSelect={setSelectedCourse}
-                          />
-                        )}
+                        <CourseSelect
+                          courses={allCourses}
+                          selectedCourse={selectedCourse}
+                          setSelectedCourse={setSelectedCourse}
+                          isLoading={isLoading.courses}
+                        />
                       </div>
                       
                       <button

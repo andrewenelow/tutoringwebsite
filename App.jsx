@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import Layout from './components/Layout';
 
 // Lazy load pages for better performance
@@ -12,7 +12,6 @@ const ContactUsPage = lazy(() => import('./pages/ContactUsPage'));
 const TutorMarketplacePage = lazy(() => import('./pages/TutorMarketplacePage'));
 const StudentDashboardPage = lazy(() => import('./pages/StudentDashboardPage'));
 const TutorDashboardPage = lazy(() => import('./pages/TutorDashboardPage'));
-const TutorProfilePage = lazy(() => import('./pages/TutorProfilePage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 // Loading component for suspense fallback
@@ -24,23 +23,24 @@ const LoadingFallback = () => (
 
 function App() {
   return (
-    <Layout>
-      <Suspense fallback={<LoadingFallback />}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/how-it-works" element={<HowItWorksPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/contact-us" element={<ContactUsPage />} />
-          <Route path="/marketplace" element={<TutorMarketplacePage />} />
-          <Route path="/student-dashboard" element={<StudentDashboardPage />} />
-          <Route path="/tutor-dashboard" element={<TutorDashboardPage />} />
-          <Route path="/tutor/:tutorId" element={<TutorProfilePage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Suspense>
-    </Layout>
+    <Router>
+      <Layout>
+        <Suspense fallback={<LoadingFallback />}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/how-it-works" element={<HowItWorksPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/contact-us" element={<ContactUsPage />} />
+            <Route path="/marketplace" element={<TutorMarketplacePage />} />
+            <Route path="/student-dashboard" element={<StudentDashboardPage />} />
+            <Route path="/tutor-dashboard" element={<TutorDashboardPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Suspense>
+      </Layout>
+    </Router>
   );
 }
 
