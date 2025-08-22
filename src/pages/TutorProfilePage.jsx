@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-
-import { useEffect, useState } from 'react';
+import * as Calendly from 'react-calendly';
 
 // API endpoint base
 const API_BASE = 'https://j3cw863bsl.execute-api.us-east-1.amazonaws.com/dev/tutorfilterresource';
@@ -12,6 +11,9 @@ const TutorProfilePage = () => {
   const [tutor, setTutor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Hardcode Calendly URL for testing
+  const calendlyUrl = 'https://calendly.com/d/d7s-vsc-stq/customer-success-team-meeting';
 
   useEffect(() => {
     const fetchTutor = async () => {
@@ -107,13 +109,28 @@ const TutorProfilePage = () => {
             </div> 
             <div className="flex gap-4 mb-6">
               <button className="border px-4 py-2 rounded hover:bg-gray-100">Message</button>
-              <button className="bg-brand-primary text-white px-4 py-2 rounded hover:bg-purple-600">Book a session</button>
+              <button 
+                onClick={() => {
+                  Calendly.openPopupWidget({ url: calendlyUrl });
+                }}
+                className="bg-brand-primary text-white px-4 py-2 rounded hover:bg-purple-600"
+              >
+                Book a session
+              </button>
             </div>
             {/* Tabs */}
             <div className="border-b flex gap-8 mb-4">
               <button className="pb-2 border-b-2 border-black font-medium">Overview</button>
               <button className="pb-2 text-gray-500">Reviews</button>
             </div>
+            {/* Calendly Widget */}
+            <div className="my-6">
+              <h2 className="font-semibold mb-2 text-lg">Schedule a Session</h2>
+              <div className="rounded-lg overflow-hidden" style={{ minHeight: '700px' }}>
+                <Calendly.InlineWidget url={calendlyUrl} />
+              </div>
+            </div>
+
             {/* About */}
             <div className="mb-4">
               <h2 className="font-semibold mb-1">About me</h2>
