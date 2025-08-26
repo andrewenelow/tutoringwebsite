@@ -101,120 +101,117 @@ function HomePage() {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900">
+    <div className="bg-white">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-brand-600 to-brand-800 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative z-10 pt-10 pb-16 sm:pt-12 sm:pb-20 md:pt-16 md:pb-24 lg:pt-20 lg:pb-28 xl:pt-24 xl:pb-32">
-            <div className="lg:grid lg:grid-cols-2 lg:gap-8 items-center">
-              <div className="text-center lg:text-left">
-                <h1 className="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl">
-                  <span className="block">Find the perfect tutor</span>
-                  <span className="block text-brand-200">for your courses</span>
-                </h1>
-                <p className="mt-3 text-base text-brand-100 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                  Connect with expert tutors who have aced the exact courses you're taking. Get personalized 1-on-1 help to boost your grades and understanding.
-                </p>
-                
-                {/* Search Form */}
-                <div className="mt-8 sm:max-w-lg sm:mx-auto lg:mx-0">
-                  <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-                    <form onSubmit={handleFindTutors} className="space-y-4">
-                      <div>
-                        <label htmlFor="university" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                          Your University
-                        </label>
-                        {isLoading.universities ? (
-                          <div className="w-full border border-gray-300 rounded-md p-2 bg-gray-100 text-gray-500">
-                            Loading universities...
-                          </div>
-                        ) : (
-                          <UniversitySelect
-                            universities={universities}
-                            selectedUniversity={selectedUniversity}
-                            onSelect={setSelectedUniversity}
-                          />
-                        )}
+      <div className="bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="text-center">
+            <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+              <span className="block">Find the perfect tutor</span>
+              <span className="block text-brand-primary">for your courses</span>
+            </h1>
+            <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+              Connect with expert tutors who have aced the exact courses you're taking. Get personalized 1-on-1 help to boost your grades and understanding.
+            </p>
+            
+            {/* Search Form */}
+            <div className="mt-8 max-w-2xl mx-auto">
+              <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
+                <form onSubmit={handleFindTutors} className="space-y-4">
+                  <div>
+                    <label htmlFor="university" className="block text-sm font-medium text-gray-700 mb-1">
+                      Your University
+                    </label>
+                    {isLoading.universities ? (
+                      <div className="w-full border border-gray-300 rounded-md p-2 bg-gray-50 text-gray-500">
+                        Loading universities...
                       </div>
-                      
-                      <div>
-                        <label htmlFor="course" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                          Course
-                        </label>
-                        {isLoading.courses ? (
-                          <div className="w-full border border-gray-300 rounded-md p-2 bg-gray-100 text-gray-500">
-                            Loading courses...
-                          </div>
-                        ) : (
-                          <CourseSelect
-                            courses={allCourses}
-                            selectedCourse={selectedCourse}
-                            onSelect={setSelectedCourse}
-                          />
-                        )}
-                      </div>
-                      
-                      <button
-                        type="submit"
-                        disabled={!selectedUniversity || !selectedCourse || isLoading.courses || isLoading.universities}
-                        className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 ${
-                          (!selectedUniversity || !selectedCourse) ? 'opacity-50 cursor-not-allowed' : ''
-                        }`}
-                      >
-                        {isLoading.courses || isLoading.universities ? (
-                          'Loading...'
-                        ) : (
-                          'Find Tutors'
-                        )}
-                      </button>
-                    </form>
-                    
-                    <p className="mt-3 text-center text-sm text-gray-600 dark:text-gray-400">
-                      Already have an account?{' '}
-                      <Link to="/login" className="font-medium text-brand-600 hover:text-brand-500 dark:text-brand-400 dark:hover:text-brand-300">
-                        Sign in
-                      </Link>
-                    </p>
+                    ) : (
+                      <UniversitySelect
+                        universities={universities}
+                        selectedUniversity={selectedUniversity}
+                        onSelect={setSelectedUniversity}
+                      />
+                    )}
                   </div>
-                </div>
-              </div>
-              
-              <div className="mt-12 lg:mt-0">
-                <img
-                  className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full rounded-lg shadow-xl"
-                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80"
-                  alt="Students studying together"
-                />
+                  
+                  <div>
+                    <label htmlFor="course" className="block text-sm font-medium text-gray-700 mb-1">
+                      Course
+                    </label>
+                    {isLoading.courses ? (
+                      <div className="w-full border border-gray-300 rounded-md p-2 bg-gray-50 text-gray-500">
+                        Loading courses...
+                      </div>
+                    ) : (
+                      <CourseSelect
+                        courses={allCourses}
+                        selectedCourse={selectedCourse}
+                        onSelect={setSelectedCourse}
+                      />
+                    )}
+                  </div>
+                  
+                  <button
+                    type="submit"
+                    disabled={!selectedUniversity || !selectedCourse || isLoading.courses || isLoading.universities}
+                    className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-brand-primary hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 ${
+                      (!selectedUniversity || !selectedCourse) ? 'opacity-50 cursor-not-allowed' : ''
+                    }`}
+                  >
+                    {isLoading.courses || isLoading.universities ? (
+                      'Loading...'
+                    ) : (
+                      'Find Tutors'
+                    )}
+                  </button>
+                </form>
+                
+                <p className="mt-3 text-center text-sm text-gray-600">
+                  Already have an account?{' '}
+                  <Link to="/login" className="font-medium text-brand-primary hover:text-brand-600">
+                    Sign in
+                  </Link>
+                </p>
               </div>
             </div>
+          </div>
+          
+          {/* Hero Image */}
+          <div className="mt-12 rounded-lg overflow-hidden shadow-xl">
+            <img
+              className="w-full h-64 object-cover sm:h-72 md:h-96 lg:h-[500px]"
+              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80"
+              alt="Students studying together"
+            />
           </div>
         </div>
       </div>
 
       {/* Features Section */}
-      <div className="py-12 bg-white dark:bg-gray-900">
+      <div className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="lg:text-center">
-            <h2 className="text-base text-brand-600 font-semibold tracking-wide uppercase">Why Choose Us</h2>
-            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+          <div className="text-center">
+            <h2 className="text-base text-brand-primary font-semibold tracking-wide uppercase">Why Choose Us</h2>
+            <p className="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">
               A better way to learn
             </p>
-            <p className="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-300 lg:mx-auto">
+            <p className="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
               Our platform connects you with top tutors who can help you succeed in your courses.
             </p>
           </div>
 
-          <div className="mt-10">
-            <div className="space-y-10 md:space-y-0 md:grid md:grid-cols-3 md:gap-x-8 md:gap-y-10">
+          <div className="mt-12">
+            <div className="grid gap-8 md:grid-cols-3">
               {features.map((feature) => (
-                <div key={feature.name} className="relative">
-                  <dt>
-                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-brand-500 text-white">
-                      <feature.icon className="h-6 w-6" aria-hidden="true" />
+                <div key={feature.name} className="bg-white p-6 rounded-lg shadow">
+                  <div className="flex items-center">
+                    <div className="flex-shrink-0 bg-brand-50 p-3 rounded-lg">
+                      <feature.icon className="h-6 w-6 text-brand-primary" aria-hidden="true" />
                     </div>
-                    <p className="ml-16 text-lg leading-6 font-medium text-gray-900 dark:text-white">{feature.name}</p>
-                  </dt>
-                  <dd className="mt-2 ml-16 text-base text-gray-500 dark:text-gray-300">{feature.description}</dd>
+                    <h3 className="ml-4 text-lg font-medium text-gray-900">{feature.name}</h3>
+                  </div>
+                  <p className="mt-4 text-base text-gray-500">{feature.description}</p>
                 </div>
               ))}
             </div>
@@ -223,18 +220,18 @@ function HomePage() {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-brand-700">
+      <div className="bg-brand-primary">
         <div className="max-w-2xl mx-auto text-center py-16 px-4 sm:py-20 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
             <span className="block">Ready to improve your grades?</span>
-            <span className="block text-brand-200">Find your perfect tutor today.</span>
+            <span className="block text-brand-100">Find your perfect tutor today.</span>
           </h2>
-          <p className="mt-4 text-lg leading-6 text-brand-100">
+          <p className="mt-4 text-lg text-brand-50">
             Join thousands of students who are already getting better grades with our tutors.
           </p>
           <Link
             to="/register"
-            className="mt-8 w-full inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-brand-600 bg-white hover:bg-gray-50 sm:w-auto"
+            className="mt-8 inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-brand-primary bg-white hover:bg-gray-50 shadow-sm"
           >
             Get started for free
           </Link>

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { TutorDataContext } from '../context/TutorDataContext.jsx';
 import { useNavigate, Link } from 'react-router-dom';
+import * as Calendly from 'react-calendly';
 
 // Star rating component
 const S3_BASE_URL = 'https://tmc-tutor-profile-pictures-test.s3.us-east-1.amazonaws.com';
@@ -46,6 +47,11 @@ function TutorMarketplacePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  const handleScheduleClick = () => {
+    const calendlyUrl = 'https://calendly.com/d/d7s-vsc-stq/customer-success-team-meeting';
+    Calendly.openPopupWidget({ url: calendlyUrl });
+  };
 
   useEffect(() => {
     const fetchTutors = async () => {
@@ -256,7 +262,9 @@ function TutorMarketplacePage() {
                   />
                     </div>
                     <div className="ml-4">
-                      <h2 className="text-lg font-medium text-gray-900">{tutor.name}</h2>
+                      <Link to={`/tutor/${tutor.tutor_id}`} className="text-lg font-medium text-brand-primary hover:underline">
+  {tutor.name}
+</Link>
                       <div className="flex items-center mt-1">
                         <StarRating rating={tutor.average_rating} />
                         <span className="ml-2 text-sm text-gray-500">
@@ -303,7 +311,7 @@ function TutorMarketplacePage() {
                     <button
                       type="button"
                       className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500"
-                      onClick={() => alert(`Scheduling with ${tutor.name} coming soon...`)}
+                      onClick={handleScheduleClick}
                     >
                       Book Session
                     </button>
