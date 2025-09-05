@@ -1,19 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import * as Calendly from 'react-calendly';
+import TutorAvailabilityCalendar from '../components/TutorAvailabilityCalendar';
 
 // API endpoint base
 const API_BASE = 'https://j3cw863bsl.execute-api.us-east-1.amazonaws.com/dev/tutorfilterresource';
 
 const TutorProfilePage = () => {
+  // Inject Teachworks booking button script on mount
+  useEffect(() => {
+    // Prevent duplicate script injection
+    if (!document.getElementById('teachworks-booking-script')) {
+      const script = document.createElement('script');
+      script.id = 'teachworks-booking-script';
+      script.type = 'text/javascript';
+      script.src = 'https://tutormycollege.teachworks.com/booking_button.js?token=XAaYArr6ayieVoX2Ujg6Q';
+      document.body.appendChild(script);
+    }
+  }, []);
+
   const { tutorId } = useParams();
   const navigate = useNavigate();
   const [tutor, setTutor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Hardcode Calendly URL for testing
-  const calendlyUrl = 'https://calendly.com/d/d7s-vsc-stq/customer-success-team-meeting';
+  // Teachworks: Replace with your actual booking widget URL or per-tutor link if available
+  const teachworksBookingUrl = 'https://tutormycollege.teachworks.com/b/XAAzYArr6ayieVoX2Ujg6Q'; // Real booking page URL
+
+  // TODO: Replace this with real fetched availability from Teachworks API
+  const [availability, setAvailability] = useState([
+    // Example placeholder data
+    { id: 22, employee_id: 7099, day: '1', start_time: '17:00:00', end_time: '22:00:00' },
+    { id: 23, employee_id: 7099, day: '3', start_time: '17:00:00', end_time: '20:00:00' },
+    { id: 24, employee_id: 7099, day: '6', start_time: '11:00:00', end_time: '18:00:00' },
+  ]);
+
+  // Handle booking a slot
+  const handleBookSlot = (slot) => {
+    // For now, just alert. Replace with booking logic or modal.
+    alert(`You selected: ${slot.day} ${slot.start_time} - ${slot.end_time}`);
+  };
 
   useEffect(() => {
     const fetchTutor = async () => {
@@ -89,8 +115,8 @@ const TutorProfilePage = () => {
             <h1 className="text-4xl font-extrabold mb-2 text-brand-primary">{tutor.name}</h1>
             <div className="text-gray-600 mb-2">
               {tutor.year_in_school ? `${tutor.year_in_school} Student` : 'Tutor'}
-              {tutor.major && tutor.major.length > 0 && (
-                <> &middot; {tutor.major.join(', ')}</>
+              {tutor.major && (
+                <> &middot; {Array.isArray(tutor.major) ? tutor.major.join(', ') : tutor.major}</>
               )}
             </div>
             <div className="flex gap-8 mb-4">
@@ -123,11 +149,22 @@ const TutorProfilePage = () => {
               <button className="pb-2 border-b-2 border-black font-medium">Overview</button>
               <button className="pb-2 text-gray-500">Reviews</button>
             </div>
-            {/* Calendly Widget */}
+
+            {/* Tutor Availability Calendar */}
+            <div className="my-6">
+              <TutorAvailabilityCalendar availability={availability} onBook={handleBookSlot} />
+            </div>
+
+            {/* Teachworks Booking Widget */}
             <div className="my-6">
               <h2 className="font-semibold mb-2 text-lg">Schedule a Session</h2>
-              <div className="rounded-lg overflow-hidden" style={{ minHeight: '700px' }}>
-                <Calendly.InlineWidget url={calendlyUrl} />
+              {/* Inline Teachworks Booking Button */}
+              <div id="teachworks-booking-button"></div>
+              {/* Fallback: direct booking page link */}
+              <div className="mt-4">
+                <a href={teachworksBookingUrl} target="_blank" rel="noopener noreferrer" className="text-brand-primary underline">
+                  Go to full booking page
+                </a>
               </div>
             </div>
 
