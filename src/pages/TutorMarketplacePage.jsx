@@ -4,8 +4,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import * as Calendly from 'react-calendly';
 
 // Star rating component
-const S3_BASE_URL = 'https://tmc-tutor-profile-pictures-test.s3.us-east-1.amazonaws.com';
-
 const StarRating = ({ rating }) => {
   const fullStars = Math.floor(rating || 0);
   const hasHalfStar = rating % 1 >= 0.5;
@@ -247,19 +245,11 @@ function TutorMarketplacePage() {
                 <div className="p-6 flex-1">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
-                    <img
-                    className="h-16 w-16 rounded-full object-cover"
-                    src={
-                      tutor.profile_picture
-                        ? `${S3_BASE_URL}/${encodeURIComponent(tutor.profile_picture)}`
-                        : `https://ui-avatars.com/api/?name=${encodeURIComponent(tutor.name || 'T')}`
-                    }
-                    alt={tutor.name}
-                    onError={e => {
-                      // fallback in case S3 key is missing or 404s
-                      e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(tutor.name)}`;
-                    }}
-                  />
+                      <img
+                        className="h-16 w-16 rounded-full object-cover"
+                        src={tutor.profile_picture || "https://ui-avatars.com/api/?name=" + encodeURIComponent(tutor.name || 'T') + "&background=4f46e5&color=fff"}
+                        alt={tutor.name}
+                      />
                     </div>
                     <div className="ml-4">
                       <Link to={`/tutor/${tutor.tutor_id}`} className="text-lg font-medium text-brand-primary hover:underline">
@@ -327,7 +317,6 @@ function TutorMarketplacePage() {
 }
 
 export default TutorMarketplacePage;
-
 
 
 
