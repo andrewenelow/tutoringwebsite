@@ -12,7 +12,7 @@ const CourseSelect = ({ courses, selectedCourse, onSelect }) => {
         onSelect(e.target.value)
       }}
     >
-      <option value="">-- Select a Course --</option>
+      <option value="">Select a Course</option>
       {courses.map((courseObj, idx) => (
         <option key={courseObj.course_id || idx} value={courseObj.name || courseObj.course_name}>
           {courseObj.name || courseObj.course_name}

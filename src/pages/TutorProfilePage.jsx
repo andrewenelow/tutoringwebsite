@@ -51,19 +51,25 @@ const TutorProfilePage = () => {
         if (!found) throw new Error('Tutor not found.');
         setTutor(found);
 
-        // Fetch availabilities if teachworks_id exists
+        // Debug: log teachworks_id
+        console.log('teachworks_id:', found.teachworks_id);
+
+        // Fetch availabilities directly for this tutor using employee_id param
         if (found.teachworks_id) {
-          const availRes = await fetch('https://mx6ezzobak.execute-api.us-east-1.amazonaws.com/dev/availabilities');
+          const availRes = await fetch(`https://mx6ezzobak.execute-api.us-east-1.amazonaws.com/dev/availabilities?employee_id=${found.teachworks_id}`);
           if (!availRes.ok) throw new Error('Failed to fetch availabilities.');
           const availData = await availRes.json();
-          // Match on teachworks_id (employee_id in availabilities)
-          const filtered = Array.isArray(availData)
-            ? availData.filter(a => String(a.employee_id) === String(found.teachworks_id))
-            : [];
-          setAvailability(filtered);
+          // Debug: log API response
+          console.log('Availabilities API response:', availData);
+          setAvailability(Array.isArray(availData) ? availData : []);
         } else {
           setAvailability([]);
         }
+
+        // Debug: log final availability state after fetch
+        setTimeout(() => {
+          console.log('Final availability state:', availability);
+        }, 1000);
       } catch (err) {
         setError(err.message || 'Error loading tutor or availability.');
       } finally {
@@ -143,15 +149,9 @@ const TutorProfilePage = () => {
               </div>
             </div> 
             <div className="flex gap-4 mb-6">
-              <button className="border px-4 py-2 rounded hover:bg-gray-100">Message</button>
-              <button 
-                onClick={() => {
-                  Calendly.openPopupWidget({ url: calendlyUrl });
-                }}
-                className="bg-brand-primary text-white px-4 py-2 rounded hover:bg-purple-600"
-              >
+              <a href="https://tutormycollege.teachworks.com/b/XAAzYArr6ayieVoX2Ujg6Q" target="_blank" rel="noopener noreferrer" className="bg-brand-primary text-white px-4 py-2 rounded hover:bg-purple-600 inline-flex items-center justify-center">
                 Book a session
-              </button>
+              </a>
             </div>
             {/* Tabs */}
             <div className="border-b flex gap-8 mb-4">

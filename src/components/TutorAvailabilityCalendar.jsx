@@ -37,15 +37,15 @@ export default function TutorAvailabilityCalendar({ availability, onBook }) {
                 <span className="font-medium">{dayMap[slot.day]}</span>
                 <span className="ml-2 text-gray-700">{formatTime(slot.start_time)} - {formatTime(slot.end_time)}</span>
               </div>
-              <button
+              <a
+                href="https://tutormycollege.teachworks.com/b/XAAzYArr6ayieVoX2Ujg6Q"
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`px-4 py-2 rounded ${selected === slot.id ? 'bg-brand-primary text-white' : 'bg-gray-200 text-gray-700 hover:bg-brand-100'}`}
-                onClick={() => {
-                  setSelected(slot.id);
-                  if (onBook) onBook(slot);
-                }}
+                onClick={() => setSelected(slot.id)}
               >
                 {selected === slot.id ? 'Selected' : 'Book'}
-              </button>
+              </a>
             </div>
           ))
         ) : (

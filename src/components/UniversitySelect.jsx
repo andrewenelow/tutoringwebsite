@@ -27,7 +27,7 @@ const UniversitySelect = ({ universities, selectedUniversity, onSelect }) => {
       }}
     >
       <option value="">
-        -- Select a University --
+        Select a University
       </option>
       {universities.map((uniObj) => {
         // We'll create a small object { id, name }
