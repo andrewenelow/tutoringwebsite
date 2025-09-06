@@ -70,18 +70,7 @@ const Layout = ({ children }) => {
 
             {/* Auth Buttons */}
             <div className="flex items-center space-x-4">
-              <Link
-                to="/login"
-                className="hidden md:inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500"
-              >
-                Sign In
-              </Link>
-              <Link
-                to="/register"
-                className="hidden md:inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-brand-700 bg-brand-100 hover:bg-brand-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 dark:bg-brand-900/30 dark:text-brand-300 dark:hover:bg-brand-900/50"
-              >
-                Sign Up
-              </Link>
+
               
               {/* Mobile menu button */}
               <button
@@ -144,18 +133,7 @@ const Layout = ({ children }) => {
               ))}
               <div className="pt-2 pb-2 border-t border-gray-200 dark:border-gray-700 mt-2">
                 <div className="space-y-2 px-2">
-                  <Link
-                    to="/login"
-                    className="w-full flex justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500"
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    to="/register"
-                    className="w-full flex justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-brand-700 bg-brand-100 hover:bg-brand-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 dark:bg-brand-900/30 dark:text-brand-300 dark:hover:bg-brand-900/50"
-                  >
-                    Sign Up
-                  </Link>
+
                 </div>
               </div>
             </div>

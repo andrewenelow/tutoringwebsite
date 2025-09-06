@@ -92,9 +92,9 @@ function HomePage() {
 
   const handleFindTutors = (e) => {
     e.preventDefault();
-    if (!selectedUniversity || !selectedCourse) {
+    if (!selectedUniversity) {
       // TODO: Show error to user
-      console.error('Please select both university and course');
+      console.error('Please select a university');
       return;
     }
     navigate('/marketplace');
@@ -154,9 +154,9 @@ function HomePage() {
                   
                   <button
                     type="submit"
-                    disabled={!selectedUniversity || !selectedCourse || isLoading.courses || isLoading.universities}
+                    disabled={!selectedUniversity || isLoading.courses || isLoading.universities}
                     className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-brand-primary hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 ${
-                      (!selectedUniversity || !selectedCourse) ? 'opacity-50 cursor-not-allowed' : ''
+                      !selectedUniversity ? 'opacity-50 cursor-not-allowed' : ''
                     }`}
                   >
                     {isLoading.courses || isLoading.universities ? (

@@ -27,13 +27,8 @@ const TutorProfilePage = () => {
   // Teachworks: Replace with your actual booking widget URL or per-tutor link if available
   const teachworksBookingUrl = 'https://tutormycollege.teachworks.com/b/XAAzYArr6ayieVoX2Ujg6Q'; // Real booking page URL
 
-  // TODO: Replace this with real fetched availability from Teachworks API
-  const [availability, setAvailability] = useState([
-    // Example placeholder data
-    { id: 22, employee_id: 7099, day: '1', start_time: '17:00:00', end_time: '22:00:00' },
-    { id: 23, employee_id: 7099, day: '3', start_time: '17:00:00', end_time: '20:00:00' },
-    { id: 24, employee_id: 7099, day: '6', start_time: '11:00:00', end_time: '18:00:00' },
-  ]);
+  // Live availability fetched from API
+  const [availability, setAvailability] = useState([]);
 
   // Handle booking a slot
   const handleBookSlot = (slot) => {
@@ -42,26 +37,40 @@ const TutorProfilePage = () => {
   };
 
   useEffect(() => {
-    const fetchTutor = async () => {
+    const fetchTutorAndAvailability = async () => {
       setLoading(true);
       setError(null);
       try {
+        // Fetch tutor
         const res = await fetch(`${API_BASE}?tutor_id=${tutorId}`);
         if (!res.ok) throw new Error('Failed to fetch tutor data.');
         const data = await res.json();
-        // API returns an array, find the one with correct tutor_id (should be only one)
         const found = Array.isArray(data)
           ? data.find(t => String(t.tutor_id) === String(tutorId))
           : null;
         if (!found) throw new Error('Tutor not found.');
         setTutor(found);
+
+        // Fetch availabilities if teachworks_id exists
+        if (found.teachworks_id) {
+          const availRes = await fetch('https://mx6ezzobak.execute-api.us-east-1.amazonaws.com/dev/availabilities');
+          if (!availRes.ok) throw new Error('Failed to fetch availabilities.');
+          const availData = await availRes.json();
+          // Match on teachworks_id (employee_id in availabilities)
+          const filtered = Array.isArray(availData)
+            ? availData.filter(a => String(a.employee_id) === String(found.teachworks_id))
+            : [];
+          setAvailability(filtered);
+        } else {
+          setAvailability([]);
+        }
       } catch (err) {
-        setError(err.message || 'Error loading tutor.');
+        setError(err.message || 'Error loading tutor or availability.');
       } finally {
         setLoading(false);
       }
     };
-    fetchTutor();
+    fetchTutorAndAvailability();
   }, [tutorId]);
 
   if (loading) {
@@ -150,6 +159,21 @@ const TutorProfilePage = () => {
               <button className="pb-2 text-gray-500">Reviews</button>
             </div>
 
+            {/* About */}
+            <div className="mb-4">
+              <h2 className="font-semibold mb-1">About me</h2>
+              <p className="text-gray-700 text-sm">{tutor.personal_bio || 'No bio provided.'}</p>
+            </div>
+            {/* Preferred Locations */}
+            {Array.isArray(tutor.tutors_preferred_locations) && tutor.tutors_preferred_locations.length > 0 && (
+              <div className="mb-4">
+                <span className="font-semibold">Preferred Locations:</span>
+                {tutor.tutors_preferred_locations.map((loc, idx) => (
+                  <span key={idx} className="ml-2 text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-800">{loc}</span>
+                ))}
+              </div>
+            )}
+
             {/* Tutor Availability Calendar */}
             <div className="my-6">
               <TutorAvailabilityCalendar availability={availability} onBook={handleBookSlot} />
@@ -168,20 +192,6 @@ const TutorProfilePage = () => {
               </div>
             </div>
 
-            {/* About */}
-            <div className="mb-4">
-              <h2 className="font-semibold mb-1">About me</h2>
-              <p className="text-gray-700 text-sm">{tutor.personal_bio || 'No bio provided.'}</p>
-            </div>
-            {/* Preferred Locations */}
-            {Array.isArray(tutor.tutors_preferred_locations) && tutor.tutors_preferred_locations.length > 0 && (
-              <div className="mb-4">
-                <span className="font-semibold">Preferred Locations:</span>
-                {tutor.tutors_preferred_locations.map((loc, idx) => (
-                  <span key={idx} className="ml-2 text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-800">{loc}</span>
-                ))}
-              </div>
-            )}
           </div>
         </div>
       </main>
