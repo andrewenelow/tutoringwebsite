@@ -15,7 +15,7 @@ const CourseSelect = ({ courses, selectedCourse, onSelect }) => {
       <option value="">Select a Course</option>
       {courses.map((courseObj, idx) => (
         <option key={courseObj.course_id || idx} value={courseObj.name || courseObj.course_name}>
-          {courseObj.name || courseObj.course_name}
+          {courseObj.course_code ? `${courseObj.course_code}: ` : ''}{courseObj.name || courseObj.course_name}
         </option>
       ))}
     </select>

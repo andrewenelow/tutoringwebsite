@@ -304,13 +304,14 @@ function TutorMarketplacePage() {
                       <span className="text-2xl font-bold text-gray-900">${tutor.rate_per_hour || 'N/A'}</span>
                       <span className="text-sm text-gray-500">/hr</span>
                     </div>
-                    <button
-                      type="button"
+                    <a
+                      href="https://tutormycollege.teachworks.com/b/XAAzYArr6ayieVoX2Ujg6Q"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500"
-                      onClick={handleScheduleClick}
                     >
                       Book Session
-                    </button>
+                    </a>
                   </div>
                 </div>
               </div>
