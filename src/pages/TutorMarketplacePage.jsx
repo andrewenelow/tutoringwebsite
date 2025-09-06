@@ -247,7 +247,13 @@ function TutorMarketplacePage() {
                     <div className="flex-shrink-0">
                       <img
                         className="h-16 w-16 rounded-full object-cover"
-                        src={tutor.profile_picture || "https://ui-avatars.com/api/?name=" + encodeURIComponent(tutor.name || 'T') + "&background=4f46e5&color=fff"}
+                        src={
+                          tutor.profile_picture && tutor.profile_picture.startsWith('http')
+                            ? tutor.profile_picture
+                            : tutor.name
+                              ? `https://tmc-tutor-profile-pictures-test.s3.us-east-1.amazonaws.com/${tutor.name.replace(/\s+/g, '_')}.jpg`
+                              : "https://ui-avatars.com/api/?name=" + encodeURIComponent(tutor.name || 'T') + "&background=4f46e5&color=fff"
+                        }
                         alt={tutor.name}
                       />
                     </div>

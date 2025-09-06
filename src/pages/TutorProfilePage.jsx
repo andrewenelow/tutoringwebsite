@@ -104,12 +104,12 @@ const TutorProfilePage = () => {
     );
   }
 
-  // Fallback for missing profile picture
-  const profileImg = tutor.profile_picture
-    ? (tutor.profile_picture.startsWith('http')
-        ? tutor.profile_picture
-        : `https://ui-avatars.com/api/?name=${encodeURIComponent(tutor.name)}&background=4f46e5&color=fff`)
-    : `https://ui-avatars.com/api/?name=${encodeURIComponent(tutor.name)}&background=4f46e5&color=fff`;
+  // Profile picture logic: use profile_picture if valid, else S3 URL from name, else avatar fallback
+  const profileImg = tutor.profile_picture && tutor.profile_picture.startsWith('http')
+    ? tutor.profile_picture
+    : tutor.name
+      ? `https://tmc-tutor-profile-pictures-test.s3.us-east-1.amazonaws.com/${tutor.name.replace(/\s+/g, '_')}.jpg`
+      : `https://ui-avatars.com/api/?name=${encodeURIComponent(tutor.name || 'T')}&background=4f46e5&color=fff`;
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
